@@ -27,6 +27,7 @@ def get_prefix(client, message):
 
 intents = discord.Intents.all()
 client = commands.Bot(command_prefix=get_prefix, intents=intents)
+client.launch_time = datetime.utcnow()
 
 
 @client.event
@@ -120,7 +121,7 @@ async def Adminhelp(ctx):
   with open('config/prefixes.json', 'r') as f:
     prefixes = json.load(f)
   prefix = prefixes[str(ctx.guild.id)]
-  embed = discord.Embed()
+  message = embed = discord.Embed()
   embed.set_author(
       name=client.user.name,
       icon_url=
@@ -146,26 +147,28 @@ async def Adminhelp(ctx):
 
 @client.command()
 async def uptime(ctx):
+  delta_uptime = datetime.utcnow() - client.launch_time
+  hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
+  minutes, seconds = divmod(remainder, 60)
+  days, hours = divmod(hours, 24)
+  logo_emoji = '<:logo:1145514059320545400>'
   global emote
   latency = round(client.latency * 1000)
   if latency >= 0:
     if latency <= 99:
-      emote = str("<:ping3:1145090054549671936>")
+      emote = str("🟢")
     if latency >= 100:
       if latency <= 119:
-        emote = str("<:ping2:1145090055803777136>")
+        emote = str("🟡")
     if latency >= 120:
       if latency <= 200:
-        emote = str("<:ping1:1145090028209459240>")
-  embed = discord.Embed(description=f'Plasma • Uptime',
-                        color=discord.Colour.gold())
-  embed.add_field(name = '`📶` Websocket Latency**', value = f'`{emote} {latency}ms`', inline = True)
-  embed.set_author(
-      name=client.user.name,
-      icon_url=
-      'https://cdn.discordapp.com/attachments/1136418508029300757/1144833877957951539/IMG_2504.jpg'
-  )
-  embed.add_f
+        emote = str("🔴")
+        
+  message = embed = discord.Embed(description=f'{logo_emoji} Plasma',
+                        color=discord.Colour.blurple())
+  embed.add_field(name = '** 🖥 Websocket Latency**', value = f'`{emote} {latency}ms`', inline = True)
+  embed.add_field(name = '** 💾 API Latency**', value = f'`✖️`', inline = True)
+  embed.add_field(name = f'⏳ **UPTIME**', value = f'```{days} d : {hours} h : {minutes} m : {seconds} s```', inline = False)
   await ctx.send(embed=embed)
 
 

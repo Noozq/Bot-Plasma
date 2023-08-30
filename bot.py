@@ -8,10 +8,9 @@ import asyncio
 from datetime import datetime, timedelta
 from asyncio import sleep
 
-
 with open('config/token.json') as f:
-  data1 = json.load(f)
-  token = data1["TOKEN"]
+  data = json.load(f)
+  token = data["TOKEN"]
 
   
 with open('config/version.json') as f:
@@ -145,9 +144,8 @@ async def Adminhelp(ctx):
   embed.set_footer(text=f'{ctx.author.name}')
   await ctx.send(embed=embed)
 
-
 @client.command()
-async def ping(ctx):
+async def uptime(ctx):
   global emote
   latency = round(client.latency * 1000)
   if latency >= 0:
@@ -159,13 +157,15 @@ async def ping(ctx):
     if latency >= 120:
       if latency <= 200:
         emote = str("<:ping1:1145090028209459240>")
-  embed = discord.Embed(description=f'{emote} Ping ist: {latency}ms',
+  embed = discord.Embed(description=f'Plasma • Uptime',
                         color=discord.Colour.gold())
+  embed.add_field(name = '`📶` Websocket Latency**', value = f'`{emote} {latency}ms`', inline = True)
   embed.set_author(
       name=client.user.name,
       icon_url=
       'https://cdn.discordapp.com/attachments/1136418508029300757/1144833877957951539/IMG_2504.jpg'
   )
+  embed.add_f
   await ctx.send(embed=embed)
 
 

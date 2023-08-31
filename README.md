@@ -1,8 +1,10 @@
 <h3 align = Center>PLASMA</h3>
-<h1 align = "Center">
-<img src="image.png" width = "100" height = "100" img>
-</h1>
+<h1 align = Center><img src="image.png" width = "100" height = "100" img></h1>
 
+<h3 align = Center>
+  
+  [Invite](https://discord.com/api/oauth2/authorize?client_id=971347959788765237&permissions=8&scope=bot)
+</h3>
 <p align="center">
   <a href="#Commands">Commands</a>
   •

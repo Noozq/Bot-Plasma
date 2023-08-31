@@ -134,12 +134,11 @@ async def uptime(ctx):
     if latency >= 120:
       if latency <= 200:
         emote = str("🔴")
-        
-  message = embed = discord.Embed(description=f'{logo_emoji} Plasma',
+  embed = discord.Embed(description=f'{logo_emoji} Plasma',
                         color=discord.Colour.blurple())
-  embed.add_field(name = '** 🖥 Websocket Latency**', value = f'`{emote} {latency}ms`', inline = True)
-  embed.add_field(name = '** 💾 API Latency**', value = f'`✖️`', inline = True)
-  embed.add_field(name = f'⏳ **UPTIME**', value = f'```{days} d : {hours} h : {minutes} m : {seconds} s```', inline = False)
+  embed.add_field(name = '** 🖥 Websocket Latency**', value = f'`{emote} {latency}ms`\n', inline = True)
+  embed.add_field(name = '** 💾 API Latency**', value = f'`✖️`\n', inline = True)
+  embed.add_field(name = f'⏳ **UPTIME**', value = f'```{days} d : {hours} h : {minutes} m : {seconds} s```\n', inline = False)
   await ctx.send(embed=embed)
 
 

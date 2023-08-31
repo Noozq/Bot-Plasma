@@ -39,7 +39,10 @@ async def on_ready():
     if filename.endswith('.py'):
       await client.load_extension(f"cogs.{filename[:-3]}")
       print(f'Cogs geladen')
-
+  for filename1 in os.listdir('./cogs/Plugins'):
+    if filename1.endswith('.py'):
+      await client.load_extension(f"./cogs/Plugins.{filename1[:-3]}")
+      print(f'Cogs geladen')
 
 @client.event
 async def on_guild_join(guild):
@@ -110,38 +113,6 @@ async def reload(ctx, *, moduls: str):
       icon_url=
       'https://cdn.discordapp.com/attachments/1136418508029300757/1144833877957951539/IMG_2504.jpg'
   )
-  embed.set_footer(text=f'{ctx.author.name}')
-  await ctx.send(embed=embed)
-
-
-@client.command(aliases=['adminhelp', 'adminh'])
-@commands.is_owner()
-async def Adminhelp(ctx):
-  """ADMIN PANNEL"""
-  with open('config/prefixes.json', 'r') as f:
-    prefixes = json.load(f)
-  prefix = prefixes[str(ctx.guild.id)]
-  message = embed = discord.Embed()
-  embed.set_author(
-      name=client.user.name,
-      icon_url=
-      'https://cdn.discordapp.com/attachments/1136418508029300757/1144833877957951539/IMG_2504.jpg'
-  )
-  embed.add_field(name='Cogs:',
-                  value=f'`{prefix}load <filename>`\n'
-                  f'`{prefix}unload <filename>`\n'
-                  f'`{prefix}reload <filename>`\n',
-                  inline=True)
-  embed.add_field(name='Allgemein:',
-                  value=f'`{prefix}setup`\n'
-                  f'`{prefix}help`\n'
-                  f'`{prefix}admin-pannel`\n'
-                  f'`{prefix}bot-info`',
-                  inline=True)
-  embed.add_field(name='Infos:',
-                  value=f'Servername: `{ctx.guild.name}`\n'
-                  f'Prefix: `{prefix}`\n',
-                  inline=True)
   embed.set_footer(text=f'{ctx.author.name}')
   await ctx.send(embed=embed)
 

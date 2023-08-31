@@ -32,16 +32,20 @@ client.launch_time = datetime.utcnow()
 
 @client.event
 async def on_ready():
-  print('=================================================')
+  print(
+    
+'██████╗░██╗░░░░░░█████╗░░██████╗███╗░░░███╗░█████╗░\n'
+'██╔══██╗██║░░░░░██╔══██╗██╔════╝████╗░████║██╔══██╗\n'
+'██████╔╝██║░░░░░███████║╚█████╗░██╔████╔██║███████║\n'
+'██╔═══╝░██║░░░░░██╔══██║░╚═══██╗██║╚██╔╝██║██╔══██║\n'
+'██║░░░░░███████╗██║░░██║██████╔╝██║░╚═╝░██║██║░░██║\n'
+'╚═╝░░░░░╚══════╝╚═╝░░╚═╝╚═════╝░╚═╝░░░░░╚═╝╚═╝░░╚═╝\n'
+)
   print(f'Botname: {client.user} • Botid: {client.user.id}')
-  print('=================================================')
+
   for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
       await client.load_extension(f"cogs.{filename[:-3]}")
-      print(f'Cogs geladen')
-  for filename1 in os.listdir('./cogs/Plugins'):
-    if filename1.endswith('.py'):
-      await client.load_extension(f"./cogs/Plugins.{filename1[:-3]}")
       print(f'Cogs geladen')
 
 @client.event

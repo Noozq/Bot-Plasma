@@ -8,7 +8,6 @@ packages = [{include = "bot_plasma"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-discord = "2.3.2"
 discord-py = "2.3.2"
 js = "1.0"
 

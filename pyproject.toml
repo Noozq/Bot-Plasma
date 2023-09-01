@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "bot-plasma"
+version = "0.1.0"
+description = ""
+authors = ["Replit user <<>>"]
+readme = "README.md"
+packages = [{include = "bot_plasma"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+py-cord = "2.4.1"
+py-cord-components = "2.2.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

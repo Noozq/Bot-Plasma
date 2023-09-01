@@ -16,4 +16,4 @@ class Giveaway(commands.Cog):
         await ctx.send(embed=embed)
 
 async def setup(client):
-    await client.add_cog(Giveaway(client))
+  await client.add_cog(Giveaway(client))

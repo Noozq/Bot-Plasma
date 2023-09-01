@@ -27,27 +27,34 @@ def get_prefix(client, message):
 
 intents = discord.Intents.all()
 client = commands.Bot(command_prefix=get_prefix, intents=intents)
+client.remove_command('help')
 client.launch_time = datetime.utcnow()
 
+outputFile = open('config/error.log', 'w')
 
+def printing(text):
+    print(text)
+    if outputFile:
+        outputFile.write(str(text))
+      
 @client.event
 async def on_ready():
   print(
-    
 '██████╗░██╗░░░░░░█████╗░░██████╗███╗░░░███╗░█████╗░\n'
 '██╔══██╗██║░░░░░██╔══██╗██╔════╝████╗░████║██╔══██╗\n'
 '██████╔╝██║░░░░░███████║╚█████╗░██╔████╔██║███████║\n'
 '██╔═══╝░██║░░░░░██╔══██║░╚═══██╗██║╚██╔╝██║██╔══██║\n'
 '██║░░░░░███████╗██║░░██║██████╔╝██║░╚═╝░██║██║░░██║\n'
 '╚═╝░░░░░╚══════╝╚═╝░░╚═╝╚═════╝░╚═╝░░░░░╚═╝╚═╝░░╚═╝\n'
-)
-  print(f'Botname: {client.user} • Botid: {client.user.id}')
-
+  )  
+  with open('config/version.json') as f:
+    config = json.load(f)
+    app_info = await client.application_info()
+    print(f'Username: {client.user}\nClientID: {client.user.id}\nVersion: {version}\nApi: {client.application.id}\nServer: {len(client.guilds)}\nApp: {app_info.name}\n')
   for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
       await client.load_extension(f"cogs.{filename[:-3]}")
-      print(f'Cogs geladen')
-
+      
 @client.event
 async def on_guild_join(guild):
   with open('config/prefixes.json', 'r') as f:
@@ -57,7 +64,6 @@ async def on_guild_join(guild):
 
   with open('config/prefixes.json', 'w') as f:
     json.dump(prefixes, f, indent=4)
-
 
 @client.event
 async def on_guild_remove(guild):

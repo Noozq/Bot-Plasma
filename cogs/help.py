@@ -1,4 +1,4 @@
-import discord, json
+import discord, json, ezcord
 from discord.ext import commands
 
 class Help(commands.Cog):
@@ -16,13 +16,6 @@ class Help(commands.Cog):
       prefixes = json.load(f)
 
     prefix = prefixes[str(ctx.guild.id)]
-    embed = discord.Embed(description = '{logo} Plasma\n')
-    embed.add_field(name = 'Generel', value = f'`{prefix}setup` | `{prefix}help` |', inline = True)
-    embed.add_field(name = 'Information', value = f'`{prefix}userinfo` | `{prefix}Serverinfo` | `{prefix}Botinfo`', inline = True)
-    embed.add_field(name = 'Moderation/AutoMod', value = 'test', inline = True)
-    embed.add_field(name = 'Giveaway', value = 'test', inline = True)
-    await ctx.send(embed = embed)
-    
 
 async def setup(client):
   await client.add_cog(Help(client))

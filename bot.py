@@ -49,11 +49,10 @@ async def on_ready():
   )  
   with open('config/version.json') as f:
     config = json.load(f)
-    app_info = await client.application_info()
-    print(f'Username: {client.user}\nClientID: {client.user.id}\nVersion: {version}\nApi: {client.application.id}\nServer: {len(client.guilds)}\nApp: {app_info.name}\n')
+    print(f'Username: {client.user}\nClientID: {client.user.id}\nVersion: {version}\nServer: {len(client.guilds)}\n')
   for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
-      await client.load_extension(f"cogs.{filename[:-3]}")
+      client.load_extension(f"cogs.{filename[:-3]}")
       
 @client.event
 async def on_guild_join(guild):

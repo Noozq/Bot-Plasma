@@ -1,4 +1,5 @@
-import discord, json, ezcord
+import discord 
+import ezcord
 from discord.ext import commands
 
 class Help(commands.Cog):
@@ -17,5 +18,5 @@ class Help(commands.Cog):
 
     prefix = prefixes[str(ctx.guild.id)]
 
-async def setup(client):
-  await client.add_cog(Help(client))
+def setup(client):
+  client.add_cog(Help(client))

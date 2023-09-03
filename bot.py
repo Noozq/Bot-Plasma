@@ -26,8 +26,10 @@ def get_prefix(client, message):
 intents = discord.Intents.all()
 client = commands.Bot(command_prefix=get_prefix, intents=intents)
 client.launch_time = datetime.utcnow()
+client.remove_command('help')
 
 @client.event
+
 async def on_ready():
     dotenv.load_dotenv()
     version = str(os.getenv("VERSION"))

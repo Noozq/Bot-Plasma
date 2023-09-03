@@ -35,5 +35,17 @@ class Utils(commands.Cog):
         embed.add_field(name=f'⏳ **UPTIME**', value=f'```{days} d : {hours} h : {minutes} m : {seconds} s```\n',
                         inline=False)
         await ctx.send(embed=embed)
+
+    @commands.command(aliases=['av', 'Av', 'Avatar'], pass_context=True)
+    async def avatar(self, ctx, *, avamember: discord.Member = None):
+        userAvatarUrl = avamember.avatar
+        embed = discord.Embed(title=f'Avatar von {avamember.name}',
+                              description=f'[png](https://cdn.discordapp.com/avatars/{avamember.id}/{avamember.avatar}.png?size=1024) | [jpg](https://cdn.discordapp.com/avatars/{avamember.id}/{avamember.avatar}.jpg?size=1024) | [gif](https://cdn.discordapp.com/avatars/{avamember.id}/{avamember.avatar}.gif?size=1024)',
+                              color=ctx.author.color)
+        embed.set_image(url=userAvatarUrl)
+        embed.set_footer(text=f'Gesendet von {ctx.author.name}')
+        embed.timestamp = datetime.datetime.utcnow()
+        await ctx.channel.send(embed=embed)
+
 def setup(client):
     client.add_cog(Utils(client))

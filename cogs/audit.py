@@ -1,17 +1,19 @@
+from datetime import datetime
+import pytz
+import discord
 from discord.ext import commands
+
 
 class Audit(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print('Setup geladen!')
+    @commands.slash_command(name = "test", guild_id=["1136418503302324284"])
+    async def setlogchannel(self, ctx):
+        await ctx.respond('test')
 
-    @commands.command()
-    async def audit(self, ctx):
-        embed = discord.Embed(title='test')
-        await ctx.send(embed=embed)
 
 def setup(client):
-  client.add_cog(Audit(client))
+    client.add_cog(Audit(client))
+
+

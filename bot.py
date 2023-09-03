@@ -8,16 +8,11 @@ from discord.ext import commands
 import asyncio
 from datetime import datetime, timedelta
 from asyncio import sleep
+import dotenv
 
-with open('config/token.json') as f:
-  data = json.load(f)
-  token = data["TOKEN"]
-
-  
-with open('config/version.json') as f:
-  config = json.load(f)
-  version = config["VERSION"]
-
+dotenv.load_dotenv()
+token = str(os.getenv("TOKEN"))
+version = str(os.getenv("VERSION"))
 
 def get_prefix(client, message):
     with open("config/prefixes.json", "r") as f:
@@ -32,6 +27,8 @@ client.launch_time = datetime.utcnow()
 
 @client.event
 async def on_ready():
+    dotenv.load_dotenv()
+    version = str(os.getenv("VERSION"))
     print(
         '██████╗░██╗░░░░░░█████╗░░██████╗███╗░░░███╗░█████╗░\n'
         '██╔══██╗██║░░░░░██╔══██╗██╔════╝████╗░████║██╔══██╗\n'
@@ -40,13 +37,21 @@ async def on_ready():
         '██║░░░░░███████╗██║░░██║██████╔╝██║░╚═╝░██║██║░░██║\n'
         '╚═╝░░░░░╚══════╝╚═╝░░╚═╝╚═════╝░╚═╝░░░░░╚═╝╚═╝░░╚═╝\n'
     )
-    with open('config/version.json') as f:
-        config = json.load(f)
-        print(
+    print(
             f'Username: {client.user}\nClientID: {client.user.id}\nVersion: {version}\nServer: {len(client.guilds)}\n')
-    for filename in os.listdir('./cogs'):
-        if filename.endswith('.py'):
-            client.load_extension(f"cogs.{filename[:-3]}")
+    cogs_list = [
+        'moderator',
+        'setup',
+        'utils',
+        'owner',
+        'help',
+        'giveaway',
+        'automod',
+        'audit'
+    ]
+
+    for cog in cogs_list:
+        client.load_extension(f'cogs.{cog}')
 
 ###################################################################
 @client.event

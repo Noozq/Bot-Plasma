@@ -14,5 +14,5 @@ class Setup(commands.Cog):
         embed = discord.Embed(title='test')
         await ctx.send(embed=embed)
 
-async def setup(client):
-    await client.add_cog(Setup(client))
+def setup(client):
+    client.add_cog(Setup(client))

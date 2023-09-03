@@ -3,6 +3,7 @@ import json
 import os
 import datetime
 import random
+import ezcord
 from discord.ext import commands
 import asyncio
 from datetime import datetime, timedelta
@@ -19,41 +20,35 @@ with open('config/version.json') as f:
 
 
 def get_prefix(client, message):
-  with open('config/prefixes.json', 'r') as f:
-    prefixes = json.load(f)
+    with open("config/prefixes.json", "r") as f:
+        prefixes = json.load(f)
 
     return prefixes[str(message.guild.id)]
 
 
 intents = discord.Intents.all()
 client = commands.Bot(command_prefix=get_prefix, intents=intents)
-client.remove_command('help')
 client.launch_time = datetime.utcnow()
 
-outputFile = open('config/error.log', 'w')
-
-def printing(text):
-    print(text)
-    if outputFile:
-        outputFile.write(str(text))
-      
 @client.event
 async def on_ready():
-  print(
-'██████╗░██╗░░░░░░█████╗░░██████╗███╗░░░███╗░█████╗░\n'
-'██╔══██╗██║░░░░░██╔══██╗██╔════╝████╗░████║██╔══██╗\n'
-'██████╔╝██║░░░░░███████║╚█████╗░██╔████╔██║███████║\n'
-'██╔═══╝░██║░░░░░██╔══██║░╚═══██╗██║╚██╔╝██║██╔══██║\n'
-'██║░░░░░███████╗██║░░██║██████╔╝██║░╚═╝░██║██║░░██║\n'
-'╚═╝░░░░░╚══════╝╚═╝░░╚═╝╚═════╝░╚═╝░░░░░╚═╝╚═╝░░╚═╝\n'
-  )  
-  with open('config/version.json') as f:
-    config = json.load(f)
-    print(f'Username: {client.user}\nClientID: {client.user.id}\nVersion: {version}\nServer: {len(client.guilds)}\n')
-  for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
-      client.load_extension(f"cogs.{filename[:-3]}")
-      
+    print(
+        '██████╗░██╗░░░░░░█████╗░░██████╗███╗░░░███╗░█████╗░\n'
+        '██╔══██╗██║░░░░░██╔══██╗██╔════╝████╗░████║██╔══██╗\n'
+        '██████╔╝██║░░░░░███████║╚█████╗░██╔████╔██║███████║\n'
+        '██╔═══╝░██║░░░░░██╔══██║░╚═══██╗██║╚██╔╝██║██╔══██║\n'
+        '██║░░░░░███████╗██║░░██║██████╔╝██║░╚═╝░██║██║░░██║\n'
+        '╚═╝░░░░░╚══════╝╚═╝░░╚═╝╚═════╝░╚═╝░░░░░╚═╝╚═╝░░╚═╝\n'
+    )
+    with open('config/version.json') as f:
+        config = json.load(f)
+        print(
+            f'Username: {client.user}\nClientID: {client.user.id}\nVersion: {version}\nServer: {len(client.guilds)}\n')
+    for filename in os.listdir('./cogs'):
+        if filename.endswith('.py'):
+            client.load_extension(f"cogs.{filename[:-3]}")
+
+###################################################################
 @client.event
 async def on_guild_join(guild):
   with open('config/prefixes.json', 'r') as f:
@@ -63,6 +58,16 @@ async def on_guild_join(guild):
 
   with open('config/prefixes.json', 'w') as f:
     json.dump(prefixes, f, indent=4)
+
+  with open('config/data/guildinfo.json', 'r') as f:
+      data = json.load(f)
+
+      data["Guildid"] = str(guild.id)
+      data["Guildname"] = str(guild.name)
+
+  with open('config/data/guildinfo.json', 'w') as f:
+    json.dump(data, f, indent=4)
+
 
 @client.event
 async def on_guild_remove(guild):
@@ -74,7 +79,16 @@ async def on_guild_remove(guild):
     with open('config/prefixes.json', 'w') as f:
       json.dump(prefixes, f, indent=4)
 
+  with open('config/data/guildinfo.json', 'r') as f:
+      data = json.load(f)
 
+      data["Guildid"].pop(str(guild.id))
+      data["Guildname"].pop(str(guild.name))
+
+  with open('config/data/guildinfo.json', 'w') as f:
+    json.dump(data, f, indent=4)
+
+###################################################################
 @client.command()
 @commands.is_owner()
 async def load(ctx, *, moduls: str):
@@ -124,31 +138,5 @@ async def reload(ctx, *, moduls: str):
   )
   embed.set_footer(text=f'{ctx.author.name}')
   await ctx.send(embed=embed)
-
-@client.command()
-async def uptime(ctx):
-  delta_uptime = datetime.utcnow() - client.launch_time
-  hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
-  minutes, seconds = divmod(remainder, 60)
-  days, hours = divmod(hours, 24)
-  logo_emoji = '<:logo:1145514059320545400>'
-  global emote
-  latency = round(client.latency * 1000)
-  if latency >= 0:
-    if latency <= 99:
-      emote = str("🟢")
-    if latency >= 100:
-      if latency <= 119:
-        emote = str("🟡")
-    if latency >= 120:
-      if latency <= 200:
-        emote = str("🔴")
-  embed = discord.Embed(description=f'{logo_emoji} Plasma',
-                        color=discord.Colour.blurple())
-  embed.add_field(name = '** 🖥 Websocket Latency**', value = f'`{emote} {latency}ms`\n', inline = True)
-  embed.add_field(name = '** 💾 API Latency**', value = f'`✖️`\n', inline = True)
-  embed.add_field(name = f'⏳ **UPTIME**', value = f'```{days} d : {hours} h : {minutes} m : {seconds} s```\n', inline = False)
-  await ctx.send(embed=embed)
-
 
 client.run(token)

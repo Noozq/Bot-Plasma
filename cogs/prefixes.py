@@ -1,17 +1,12 @@
 import discord
+
 from discord.ext import commands
 import json
 
 
 class Prefixes(commands.Cog):
-
   def __init__(self, client):
     self.client = client
-
-  @commands.Cog.listener()
-  async def on_ready(self):
-    print('Prefixes geladen!')
-
   @commands.command(pass_context=True)
   @commands.has_permissions(administrator=True)
   async def changeprefix(self, ctx, prefix):
@@ -39,6 +34,5 @@ class Prefixes(commands.Cog):
 
     await ctx.send(f'Reset to: {mprefix}')
 
-
-async def setup(client):
-  await client.add_cog(Prefixes(client))
+def setup(client):
+  client.add_cog(Prefixes(client))

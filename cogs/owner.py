@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 
 class Owner(commands.Cog):
+    def __init__(self, client):
+        self.client = client
 
     def __init__(self, client):
         self.client = client
@@ -15,5 +17,5 @@ class Owner(commands.Cog):
         embed = discord.Embed(title='test')
         await ctx.send(embed=embed)
 
-async def setup(client):
-  await client.add_cog(Owner(client))
+def setup(client):
+  client.add_cog(Owner(client))

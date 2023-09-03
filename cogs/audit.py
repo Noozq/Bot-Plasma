@@ -1,7 +1,6 @@
 from discord.ext import commands
 
 class Audit(commands.Cog):
-
     def __init__(self, client):
         self.client = client
 
@@ -14,5 +13,5 @@ class Audit(commands.Cog):
         embed = discord.Embed(title='test')
         await ctx.send(embed=embed)
 
-async def setup(client):
-  await client.add_cog(Audit(client))
+def setup(client):
+  client.add_cog(Audit(client))

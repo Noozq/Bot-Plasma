@@ -1,6 +1,6 @@
 <h3 align = Center>PLASMA</h3>
 <h1 align = Center><img src="image.png" width = "100" height = "100" img></h1>
-<h1 align = Center><img src="bot.png" width = "980" height = "250" img></h1>
+<h1 align = Center><img src="cmd_loging.png" width = "980" height = "250" img></h1>
 <h3 align = Center>
   
   [Invite](https://discord.com/api/oauth2/authorize?client_id=971347959788765237&permissions=8&scope=bot)

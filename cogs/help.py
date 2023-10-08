@@ -8,41 +8,27 @@ class Help(commands.Cog):
 
   @commands.Cog.listener()
   async def on_ready(self):
-    print('Setup geladen!')
-
+    print('Setup geladen!)
+  
   @commands.command()
-  async def help(self, ctx, args=None):
-      help_embed = discord.Embed(title="My Bot's Help!")
-      command_names_list = [x.name for x in self.client.commands]
-
-      # If there are no arguments, just list the commands:
-      if not args:
-        help_embed.add_field(
-          name="List of supported commands:",
-          value="\n".join([str(i + 1) + ". " + x.name for i, x in enumerate(self.client.commands)]),
-          inline=False
-        )
-        help_embed.add_field(
-          name="Details",
-          value="Type `.help <command name>` for more details about each command.",
-          inline=False
-        )
-
-      # If the argument is a command, get the help text from that command:
-      elif args in command_names_list:
-        help_embed.add_field(
-          name=args,
-          value=self.client.get_command(args).help
-        )
-
-      # If someone is just trolling:
-      else:
-        help_embed.add_field(
-          name="Nope.",
-          value="Don't think I got that command, boss!"
-        )
-
-      await ctx.send(embed=help_embed)
-
+  async def help(self, ctx):
+      with open('config/prefixes.json') as f:
+        config = json.load(f)
+        prefix = config(str(guild.id)
+      embed=discord.Embed(description="Plasma", color=0x74a7ff)
+      embed.add_field(name="Generell", value="{prefix}setup | {prefix}changeprefix | {prefix}resetprefix", 
+                      inline=True)
+      embed.add_field(name="Moderation", value="{prefix}ban | {prefix}unban | {prefix}kick | {prefix}mute", 
+                      inline=True)
+      embed.add_field(name="Automod", value="", 
+                      inline=True)
+      embed.add_field(name="Audit", value="", 
+                      inline=True)
+      embed.add_field(name="Utils", value="", 
+                      inline=True)
+      embed.add_field(name="Giveaway", value="", 
+                      inline=True)
+      await ctx.send(embed=embed)
+      
 def setup(client):
   client.add_cog(Help(client))

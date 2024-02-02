@@ -1,5 +1,4 @@
 <h3 align = Center>LYRA LEAGACY</h3>
-<h1 align = Center><img src="image.png" width = "100" height = "100" img></h1>
 <h1 align = Center><img src="phonto.png"img></h1>
 <h3 align = Center>
   
